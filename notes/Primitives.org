@@ -1,0 +1,12 @@
+#+title: Primitives Developer's Notes
+
+Here I am working on a library that will make domain validation accross I/O boundaries a lot easier. It's inspired in part by a lot of Scott Wlashin's work to do with functional domain modelling and also by `io-ts` in Typescript, and by what I am learning to do in Haskell more generally.
+
+The goal isn't too ambitious. It is to have a set of utilities to be able to take a lot of the boilerplate involved in setting up constrained types or newtypes in F#. What we are trying to emulate is separating our domain types from input types. When taking some set of data in to the system, we want to validate it once and wrap the string or whatever underlying type in a new type that represents the state of a type after it has been validated. These types have hidden constructors which force anyone creating the type to use a factory method which validates the type before creating the object. Thus when we require a function to use an Email type, or string of format type, or even natural number type etc., we already know that they have passed validation and can only be in the correct state, (If everything works properly).
+
+From here we can use these contstained primitives to build more complex types by using a applicative constructors. I'm not sure if that's the correct term, but we can apply a constructor function that takes an email and title type like `cons <!> email.make s <*> title.make s'`. Then we have to use the Validation type that comes with FSharp to collect the validation errors that arise.
+
+What I expect from this library is to have drop in Validations for common primitives like TimeStamp, or Positive Number, and even Email. But also, helper functions for quickly getting up and running with ad hoc validations like Title which might accept a regex or strings with different numbers etc. It would also be better if these functions composed etc. We could easily create and combine an endless number of these validations.
+
+** Upgrades
+   Replace `string list` with some other data type that will make adding faster and support better reporting. Look at Monoids in FSharpPlus.

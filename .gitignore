@@ -1,0 +1,17 @@
+#dotnet
+obj/
+bin/
+
+#direnv
+.direnv/
+
+#ionide
+.ionide/
+
+#paket
+.paket/
+packages/
+paket-files/
+
+*.env*
+config/
